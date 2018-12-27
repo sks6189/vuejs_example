@@ -1,0 +1,99 @@
+<!doctype html> 
+<html lang="ko"> 
+<head> 
+    <meta charset="EUC-KR"> 
+    <title>Document</title> 
+</head> 
+<body> 
+<div id="test"> 
+    {{message}}<br> 
+    <a v-bind:href="href" v-bind:target="target">이동</a><br> 
+    <input type="text" v-model="text"><br> 
+    <h4 v-html="text"></h4><br> 
+
+    <input type="checkbox" value="1" v-model="array">1 
+    <input type="checkbox" value="2" v-model="array">2 
+    <input type="checkbox" value="3" v-model="array">3 
+    <input type="checkbox" value="4" v-model="array">4 
+    <input type="checkbox" value="5" v-model="array">5 
+
+    기본값 <span>{{sum}}</span> 
+</div> 
+<div id="test2"> 
+    <span v-html="array"></span><br> 
+    <span v-if="array.length == 0">낮음</span> 
+    <span v-else-if="array.length > 0 && array.length < 4">중간</span> 
+    <span v-else>높음</span> 
+    <div> 
+        <select> 
+            <option v-for="(list, key , i) in arrayTemp" v-bind:value="list.id" v-bind:key="list.id"> 
+                {{list.name}} 
+            </option> 
+        </select> 
+    </div> 
+    <button @click="dis_click">dis</button> 
+    <button @click="on_click">on</button> 
+</div> 
+
+<main-component></main-component> 
+
+<script type="text/javascript" src="/js/vue/vue.min.js"></script> 
+<script type="text/javascript" src="/js/vue/axios.min.js"></script> 
+<script type="text/javascript" src="/js/vue/es6-promise.min.js"></script> 
+<script type="text/javascript" src="/js/vue/es6-promise.auto.min.js"></script> 
+<script type="text/javascript" src="/js/vue/vue-router.3.0.2.js"></script> 
+
+<script> 
+    Vue.component('main-component',{ 
+        template : '<div>12345</div>' 
+    }); 
+
+    var model = { 
+        message : 'Hello Vue', 
+        href: 'https://gosi.hackers.com/', 
+        target : '_blank', 
+        checked : 'checked', 
+        text : '', 
+        array: ['1','3'], 
+        cnt: 0, 
+        arrayTemp : [ 
+            { id : '1234', name : 'niasnd' }, 
+            { id : '3456', name : 'alksjd' }, 
+            { id : '7890', name : 'afqwef' } 
+        ] 
+    }; 
+
+    var test1 = new Vue({ 
+        el : '#test', 
+        data : model, 
+        computed : { 
+            sum : function(){ 
+                var cnt = 0; 
+                for(var i in this.array){ 
+                    cnt += parseInt(this.array[i]); 
+                } 
+                console.log(cnt); 
+            } 
+        } 
+    }); 
+
+    var test2 = new Vue({ 
+        el : '#test2', 
+        data : model, 
+        methods : { 
+            dis_click : function(){ 
+                this.cnt += 1; 
+                alert('dis'); 
+                alert(this.cnt); 
+            }, 
+            on_click : function(){ 
+                this.cnt -= 1; 
+                alert('on'); 
+                alert(this.cnt); 
+            } 
+        } 
+    }) 
+</script> 
+
+</body> 
+</html> 
